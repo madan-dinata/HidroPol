@@ -1,5 +1,5 @@
-<%- include('./partials/header') %> 
-<%- include('./partials/nav') %> 
+<%- include('./layout/header') %> 
+<%- include('./layout/nav') %>  
 
     <div class="content mt-4">
         
@@ -224,6 +224,9 @@
         sinaruv.innerHTML = snapshot.val().SinarUV;
         // console.log(`Berhasil membaca nutrisi ${snapshot.val().Nutrisi} dan suhu ${snapshot.val().Suhu},,${snapshot.val().Ketinggian},,${snapshot.val().Ph},,${snapshot.val().Ph}`)
       });
+
+      // update set dabase
+      
     </script>
 
   </body>
