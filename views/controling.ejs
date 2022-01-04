@@ -30,11 +30,11 @@
                   <div class="p-1 cardalem mb-3">
                     <h5 class="h4 p-1">Water PH</h5>
                   </div>
-                  <label class="h5 mt-5">Your Current Water PH</label>
-                  <h1 class="h3"><span id="ph"></span></h1>
                   <div class="row p-3">
                     <div class="col">
                       <form class="form-group">
+                        <label class="h5 mt-5">Your Current Water PH UP</label>
+                        <h1 class="h3"><span id="phUp"></span></h1>
                         <label class="h5">Set Your Water Ph Up</label>
                         <input type="number" class="form-control" id="inputUpdatePhUp">
                         <button class="submit" id="btnUpdatePhUp" style="font-size: 13px; margin-top: -9px;">Update Ph Up</button>
@@ -42,6 +42,8 @@
                     </div>
                     <div class="col">
                       <form class="form-group">
+                        <label class="h5 mt-5">Your Current Water PH DOWN</label>
+                        <h1 class="h3"><span id="phDown"></span></h1>
                         <label class="h5">Set Your Water Ph Down</label>
                         <input type="number" class="form-control" id="inputUpdatePhDown">
                         <button class="submit" id="btnUpdatePhDown" style="font-size: 13px; margin-top: -9px;">Update Ph Down</button>
@@ -81,7 +83,7 @@
                 </div>
                 <div class="py-5">
                   <form class="form-group py-5 my-5">
-                      <input type="checkbox" data-toggle="toggle" data-onstyle="dark">
+                      <input type="checkbox" data-toggle="toggle" data-onstyle="dark" id="updateSinarUV">
                   </form>
                 </div>
             </div>
@@ -153,24 +155,32 @@
       // read database
       const volume = document.getElementById("volume");
       const nutrisi = document.getElementById("nutrisi");
-      const ph = document.getElementById("ph");
-      const sinaruv = document.getElementById("sinaruv")
-      const DHT11SensorData = ref(database, "DHT11SensorData");
-      onValue(DHT11SensorData, (snapshot) => {
-        volume.innerHTML = snapshot.val().Ketinggian;
+      const phUp = document.getElementById("phUp");
+      const phDown = document.getElementById("phDown");
+      const sinaruv = document.getElementById("updateSinarUV")
+      const DHT11SensorUpdate = ref(database, "DHT11SensorUpdate");
+      onValue(DHT11SensorUpdate, (snapshot) => {
+        volume.innerHTML = snapshot.val().Volume;
         nutrisi.innerHTML = snapshot.val().Nutrisi;
-        ph.innerHTML = snapshot.val().Ph;
-        // sinaruv.innerHTML = snapshot.val().SinarUV;
-        // console.log(`Berhasil membaca nutrisi ${snapshot.val().Nutrisi} dan suhu ${snapshot.val().Suhu},,${snapshot.val().Ketinggian},,${snapshot.val().Ph},,${snapshot.val().Ph}`)
+        phUp.innerHTML = snapshot.val().PhUp;
+        phDown.innerHTML = snapshot.val().PhDown;
+        console.log(`Berhasil membaca ${snapshot.val().SinarUv}`)
       });
 
       // update set dabase
       const inputUpdateVolume = document.getElementById("inputUpdateVolume");
       const btnUpdateVolume = document.getElementById("btnUpdateVolume")
+      const inputUpdatePhUp = document.getElementById("inputUpdatePhUp");
+      const btnUpdatePhUp = document.getElementById("btnUpdatePhUp")
+      const inputUpdatePhDown = document.getElementById("inputUpdatePhDown");
+      const btnUpdatePhDown = document.getElementById("btnUpdatePhDown")
+      const inputUpdateNutrisi = document.getElementById("inputUpdateNutrisi");
+      const btnUpdateNutrisi = document.getElementById("btnUpdateNutrisi")
+      // Volume
       btnUpdateVolume.addEventListener("click", (e) => {
         e.preventDefault()
-        update(ref(database, "DHT11SensorData/"), {
-          Ketinggian: inputUpdateVolume.value
+        update(DHT11SensorUpdate, {
+          Volume: inputUpdateVolume.value
         })
         .then(() => {
           console.log("succes update volume air")
@@ -179,6 +189,49 @@
           console.log("update tidak sukses", error)
         })
       })
+      // PH UP
+      btnUpdatePhUp.addEventListener("click", (e) => {
+        e.preventDefault()
+        update(DHT11SensorUpdate, {
+          PhUp: inputUpdatePhUp.value
+        })
+        .then(() => {
+          console.log("succes update Ph Up")
+        })
+        .catch((error) => {
+          console.log("update tidak sukses", error)
+        })
+      })
+      // Ph Down
+      btnUpdatePhDown.addEventListener("click", (e) => {
+        e.preventDefault()
+        update(DHT11SensorUpdate, {
+          PhDown: inputUpdatePhDown.value
+        })
+        .then(() => {
+          console.log("succes update Ph Down")
+        })
+        .catch((error) => {
+          console.log("update tidak sukses", error)
+        })
+      })
+      // Nutrisi
+      btnUpdateNutrisi.addEventListener("click", (e) => {
+        e.preventDefault()
+        update(DHT11SensorUpdate, {
+          Nutrisi: inputUpdateNutrisi.value
+        })
+        .then(() => {
+          console.log("succes update Nutrisi air")
+        })
+        .catch((error) => {
+          console.log("update tidak sukses", error)
+        })
+      })
+
+
+
+
     </script>
 
   </body>
