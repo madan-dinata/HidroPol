@@ -274,8 +274,11 @@
         nutrisi.innerHTML = snapshot.val().Nutrisi;
         ketinggian.innerHTML = snapshot.val().Ketinggian;
         ph.innerHTML = snapshot.val().Ph;
-        sinaruv.innerHTML = snapshot.val().SinarUV;
         // console.log(`Berhasil membaca nutrisi ${snapshot.val().Nutrisi} dan suhu ${snapshot.val().Suhu},,${snapshot.val().Ketinggian},,${snapshot.val().Ph},,${snapshot.val().Ph}`)
+      });
+      const DHT11SensorUpdate = ref(database, "DHT11SensorUpdate");
+      onValue(DHT11SensorUpdate, (snapshot) => {
+        sinaruv.innerHTML = snapshot.val().SinarUv;
       });
     </script>
 

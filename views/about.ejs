@@ -110,12 +110,10 @@
           item.classList.toggle("d-inline-block")) )
           signout.forEach((item) => (item.style.display = "none") )
         } else {
-          window.location = "/";
           console.log("no user");
           signin.forEach((item) => (item.style.display = "none") )
           signout.forEach((item) => (item.style.display = "block",
           item.classList.toggle("d-inline-block")) )
-          window.location = "/";
         }
       });
 
